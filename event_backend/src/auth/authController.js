@@ -1,4 +1,9 @@
-const JWT_SECRET="supersecrekey";
+const bcrypt     = require("bcryptjs");
+const jwt        = require("jsonwebtoken");
+const pool       = require("../../db");
+
+
+const JWT_SECRET="supersecretkey";
 
 
 exports.login=async(req,res)=>{
@@ -25,23 +30,27 @@ exports.signup=async(req,res)=>{
     try{
     const {username,password}=req.body;
 
-    const result=await pool.query("SELEC id FROM users WHERE username=1*",[username]);
+    const result=await pool.query("SELECT id FROM users WHERE username=$1",[username]);
     const user=result.rows[0];
 
-    if(result.rows.lenght()>0){
+    if(result.rows.length>0){
         return res.status(409).json({error:"Invalid credentials"})
     }
 
-    const hash = await bcrypt.hash(password);
+    const hash = await bcrypt.hash(password,10);
 
-    const isInsert =await pool.query("INSERT INTO users (username,password) VALUES($1,$2)",["user",hash]);  
-    if(!isInsert){
-            return res.status(401).json({error:"Invalid credentials"})
-        }
+    const insert =await pool.query("INSERT INTO users (username,password) VALUES($1,$2) RETURNING id, username",[username,hash]);  
+    return res.status(201).json({ user: insert.rows[0] });
+
     }
-    catch(err){
-        return res.status(500).json({error:"Server Error"})
+    catch (err) {
+    console.error("signup error:", err); // <= affiche l'erreur exacte
+    // optionnel: gérer le cas unique violation
+    if (err.code === "23505") {
+      return res.status(409).json({ error: "Username already exists" });
     }
+    return res.status(500).json({ error: err.message });
+  }
     
 }
 

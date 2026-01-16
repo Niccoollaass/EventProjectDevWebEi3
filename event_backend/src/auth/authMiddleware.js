@@ -1,4 +1,4 @@
-const JWT_SECRET="supersecrekey";
+const JWT_SECRET="supersecretkey";
 
 exports.requireAuth=(req,res,next)=>{
     const authHeader=req.header("Authorization");

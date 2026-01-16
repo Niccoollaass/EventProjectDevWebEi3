@@ -1,4 +1,4 @@
-const { Pool} = require("pg");
+const {Pool} = require("pg");
 
 const pool = new Pool({
     host:"localhost",
@@ -8,4 +8,4 @@ const pool = new Pool({
     database: "eventdb"
     });
 
-module.exports = { pool };
+module.exports =  pool ;
