@@ -4,11 +4,12 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const {login}=require("./auth/authController");
+const {login,signup}=require("./auth/authController");
 const { requireAuth } = require("./auth/authMiddleware");
 
 app.post("/api/login",login)
 app.post("/api/validate",requireAuth)
+app.post("/api/signup",signup)
 
 
 

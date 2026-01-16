@@ -1,4 +1,4 @@
-import type {LoginResponse, User} from "../utils/types.ts"
+import type {LoginResponse,SignUpResponse, User} from "../utils/types.ts"
 
 export async function login(username:string,password:string):Promise<string>{
     const res = await fetch("/api/login",{
@@ -9,11 +9,29 @@ export async function login(username:string,password:string):Promise<string>{
 
     if(!res.ok){
         throw new Error("Invalid credentials");
-    }
+    }   
     const data: LoginResponse=await res.json();
     localStorage.setItem("token",data.token);
 
     return data.token;
+}
+export async function signup(username:string,password:string):Promise<void>{
+    const res = await fetch("/api/signup",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({username,password}),
+    })
+
+    if(!res.ok){
+        let msg="Cannot create user";
+        try{
+            const data = await res.json();
+            if (data?.error) msg=data.error;
+        }
+        catch{
+
+        }
+    }   
 }
 
 
@@ -26,7 +44,7 @@ export async function validateToken():Promise<User>{
     }
     const res = await fetch("/api/validate",{
         headers:{
-            Authorization:'Bearer $(token',
+            Authorization:`Bearer ${token}`,
         },
     });
     if (!res.ok){
