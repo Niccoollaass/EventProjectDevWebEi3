@@ -1,0 +1,44 @@
+.app-header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+
+  padding: 12px 24px;
+  border-bottom: 1px solid #ccc;
+
+  &__left {
+    // Vide volontairement pour garder le titre parfaitement centré
+  }
+
+  &__title {
+    margin: 0;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  &__right {
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__auth {
+    font-size: 14px;
+  }
+  
+}
+.event-page {
+  padding: 24px;
+}
+
+.event-title {
+  margin-bottom: 24px;
+}
+
+.event-list {
+  display: flex;
+  gap: 24px;
+}
+

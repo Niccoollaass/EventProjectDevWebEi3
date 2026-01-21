@@ -1,0 +1,17 @@
+.event-card {
+  width: 260px;
+  height: 140px;
+
+  background: #f3f0ea;
+  border-radius: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+  font-weight: 500;
+  color: #ff0000;
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}

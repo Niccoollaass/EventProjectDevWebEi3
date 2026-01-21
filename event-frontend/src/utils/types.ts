@@ -11,3 +11,7 @@ export interface User{
 }
 
 
+export type HeaderProps = {
+  title: string;
+  user: User | null;
+};

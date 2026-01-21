@@ -1,19 +1,22 @@
 const JWT_SECRET="supersecretkey";
 
+const jwt        = require("jsonwebtoken");
+
+
 exports.requireAuth=(req,res,next)=>{
     const authHeader=req.header("Authorization");
     if(!authHeader){
         return res.status(401).json({error:"No token provided"});
     }
-    const token = authHeader.replace("Bearer","");
+    const token = authHeader.replace("Bearer", "").trim();
 
 try{
     const decoded=jwt.verify(token,JWT_SECRET);
     req.user=decoded;
     next();
 }
-catch{
-    return res.status(401).json({erro:"Token invalid"});
+catch (err) {
+  return res.status(401).json({ error: "Token invalid", detail: err.message });
 }
 
 

@@ -1,4 +1,4 @@
-import type {LoginResponse,SignUpResponse, User} from "../utils/types.ts"
+import type {LoginResponse, User} from "../utils/types.ts"
 
 export async function login(username:string,password:string):Promise<string>{
     const res = await fetch("/api/login",{
@@ -42,10 +42,12 @@ export async function validateToken():Promise<User>{
     if(!token){
         throw new Error("no token");
     }
-    const res = await fetch("/api/validate",{
+    const res = await fetch("/api/me",{
+        method:"GET",
         headers:{
             Authorization:`Bearer ${token}`,
         },
+    
     });
     if (!res.ok){
         throw new Error("Invalid token");

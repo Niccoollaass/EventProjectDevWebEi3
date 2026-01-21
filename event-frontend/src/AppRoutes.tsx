@@ -1,8 +1,12 @@
 import LoginPage from "./Page/LoginPage.tsx";
 import SignUpPage from "./Page/SignUpPage.tsx";
+import Header from "./Component/Header";
 
-import AccueilPage from "./Page/AccueilPage.tsx";
 import EventPage from "./Page/EventPage.tsx";
+import AboutPage from "./Page/AboutPage.tsx";
+import ParametersPage from "./Page/ParametersPage.tsx";
+import ContactPage from "./Page/ContactPage.tsx";
+
 
 
 import {useMemo} from "react";
@@ -19,10 +23,13 @@ export default function AppRoutes({
                                   }: AppRoutesProps){
 
     const token = localStorage.getItem("token");
-    const isAuthentificated = useMemo(() => Boolean(token && user),[]);
+    const isAuthentificated = useMemo(() => Boolean(token && user),[token,user]);
     return (
-
+    <>
+    <Header user={user} />
+    
     <Routes>
+
         <Route 
             path="/"
             element={
@@ -30,11 +37,10 @@ export default function AppRoutes({
                     <Navigate to="/events" replace/>
 
                 ) : (
-                    <AccueilPage/>
+                    <LoginPage/>
                 )
             }
         />
-        
         <Route
             path="/login"
             element={
@@ -47,14 +53,17 @@ export default function AppRoutes({
                     <SignUpPage/>
             }
         />
-        <Route
-            path="/events"
-            element={
-                    <EventPage/>
-                
-            }
-        />
+        <Route path="/events" element={<EventPage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/parameters" element={<ParametersPage />} />
+        <Route path="/Contact" element={<ContactPage />} />
+
+
+
+
         
     </Routes>
+    </>
+
     );
 }

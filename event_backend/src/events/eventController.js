@@ -1,32 +1,10 @@
-const bcrypt     = require("bcryptjs");
-const jwt        = require("jsonwebtoken");
 const pool       = require("../../db");
 
 
 const JWT_SECRET="supersecretkey";
 
 
-exports.login=async(req,res)=>{
-    const {username,password}=req.body;
-
-    const result=await pool.query("SELECT * FROM users WHERE username=$1",[username]);
-    const user=result.rows[0];
-
-    if(!user){
-        return res.status(401).json({erro:"Invalid credentials"})
-    }
-
-    const isMatch = await bcrypt.compare(password,user.password);   
-
-    if(!isMatch){
-        return res.status(401).json({error:"Invalid credentials"})
-    }
-
-    const token = jwt.sign({id:user.id,username:user.username},JWT_SECRET,{expiresIn:"1s"});
-    return res.json({token});
-}
-
-exports.signup=async(req,res)=>{
+exports.createevent=async(req,res)=>{
     try{
     const {username,password}=req.body;
 
@@ -51,15 +29,5 @@ exports.signup=async(req,res)=>{
     }
     return res.status(500).json({ error: err.message });
   }
-    
 }
-
-exports.me = async(req,res)=>{
-    return res.json({
-        user: {
-            id: req.user.id,
-            username: req.user.username,
-        },
-    });
-};
-
+  
