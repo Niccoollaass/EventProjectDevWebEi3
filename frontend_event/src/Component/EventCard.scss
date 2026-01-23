@@ -1,0 +1,38 @@
+.event-card {
+  background: #f5f1eb;
+  border-radius: 14px;
+  padding: 16px;
+  min-height: 160px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+
+  color: #c40000; // rouge comme sur ta capture
+}
+
+.event-card-date {
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.event-card-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.event-card-desc {
+  font-size: 14px;
+  color: #a00000;
+}
+
+.event-card-footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+}

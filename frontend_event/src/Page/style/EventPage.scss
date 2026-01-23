@@ -16,6 +16,7 @@
     font-size: 20px;
     font-weight: 600;
   }
+  
 
   &__right {
     justify-self: end;
@@ -32,6 +33,27 @@
 .event-page {
   padding: 24px;
 }
+.add-btn {
+  font-size: 24px;
+  width: 40px;
+  height: 40px;
+}
+
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+}
+
 
 .event-title {
   margin-bottom: 24px;

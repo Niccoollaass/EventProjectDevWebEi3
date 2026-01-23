@@ -1,10 +1,8 @@
 import "./Header.scss";
 import { Link,useNavigate } from "react-router-dom";
 import type { User } from "../utils/types";
+import type {HeaderProps} from "../utils/types"
 
-type HeaderProps = {
-  user: User | null;
-};
 
 export default function Header({ user }: HeaderProps) {
     const navigate = useNavigate();
@@ -27,7 +25,7 @@ export default function Header({ user }: HeaderProps) {
         {/* CENTRE */}
         <div className="site-header__center">
           <Link className="site-header__brand" to="/">
-            La vie en roses
+            Event site web
           </Link>
         </div>
 
