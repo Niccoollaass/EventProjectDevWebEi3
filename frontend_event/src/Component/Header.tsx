@@ -1,6 +1,5 @@
 import "./Header.scss";
 import { Link,useNavigate } from "react-router-dom";
-import type { User } from "../utils/types";
 import type {HeaderProps} from "../utils/types"
 
 
@@ -42,7 +41,7 @@ export default function Header({ user }: HeaderProps) {
               
             </>
           ) : (
-            <span className="site-header__auth">Non connecté</span>
+            <Link className="site-header__auth" to="/login">Se connecter</Link>
           )}
 
           {/* Paramètres */}

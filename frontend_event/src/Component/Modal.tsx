@@ -1,30 +1,54 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import "./Modal.scss";
+import type {ModalProps} from "../utils/types"
 
-type CreateEventData = {
-  name: string;
-  event_date: string;
-  description: string;
-  people_max: number;
-};
 
-type ModalProps = {
-  open: boolean;
-  title?: string;
-  onClose: () => void;
-  onSubmit: (data: CreateEventData) => Promise<void> | void;
-};
 
-export default function Modal({ open, title, onClose, onSubmit }: ModalProps) {
+export default function Modal({ open,
+  title,
+  onClose,
+  onSubmit,
+  selectedEvent,
+  isEdit
+}: ModalProps) {
   const [name, setName] = useState("");
   const [eventDate, setEventDate] = useState(""); // datetime-local: "YYYY-MM-DDTHH:mm"
   const [description, setDescription] = useState("");
   const [peopleMax, setPeopleMax] = useState<number>(20);
+  const [nbParticipants, setNbParticipants] = useState<number>(20);
+
+  const [limitWarning, setLimitWarning] = useState<string | null>(null);
+
 
   const [localError, setLocalError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
+
+  useEffect(() => {
+    if (!open) return;
+
+    if (selectedEvent) {
+      setName(selectedEvent.name ?? "");
+      setDescription(selectedEvent.description ?? "");
+      setPeopleMax(Number(selectedEvent.people_max ?? 20));
+      setNbParticipants(Number(selectedEvent.nb_participants ?? 0))
+
+      // datetime-local attend "YYYY-MM-DDTHH:mm"
+      const dt = selectedEvent.event_date ? String(selectedEvent.event_date).slice(0, 16) : "";
+      setEventDate(dt);
+    } else {
+      // mode création : vider
+      setName("");
+      setEventDate("");
+      setDescription("");
+      setPeopleMax(20);
+    }
+
+    setLocalError(null);
+  }, [open, selectedEvent]);
+
   if (!open) return null;
+
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -94,15 +118,30 @@ export default function Modal({ open, title, onClose, onSubmit }: ModalProps) {
               />
             </label>
 
-            <label>
+           <label>
               Nombre max
               <input
                 type="number"
-                min={1}
+                min={isEdit ? nbParticipants : 1}
                 value={peopleMax}
-                onChange={(e) => setPeopleMax(Number(e.target.value))}
+                onChange={(e) => {
+                  const value = Number(e.target.value);
+
+                  if (isEdit && value < nbParticipants) {
+                    setLimitWarning(
+                      `Impossible de descendre en dessous du nombre de participant (${nbParticipants}).`
+                    );
+                    return;
+                  }
+                  setLimitWarning(null);
+                  setPeopleMax(value);
+                }}
                 required
               />
+
+              {limitWarning && (
+                <p className="warning">{limitWarning}</p>
+              )}
             </label>
 
             <div className="modal-actions">
@@ -110,7 +149,7 @@ export default function Modal({ open, title, onClose, onSubmit }: ModalProps) {
                 Annuler
               </button>
               <button type="submit" disabled={loading}>
-                {loading ? "Création..." : "Créer"}
+                {loading ? (isEdit ? "Modification..." : "Création...") : (isEdit ? "Modifier" : "Créer")}
               </button>
             </div>
           </form>

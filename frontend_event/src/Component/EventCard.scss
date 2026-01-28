@@ -1,38 +1,94 @@
-.event-card {
-  background: #f5f1eb;
-  border-radius: 14px;
-  padding: 16px;
-  min-height: 160px;
+  .event-card {
+    background: #f5f1eb;
+    border-radius: 14px;
+    padding: 16px;
+    min-height: 160px;
 
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
 
-  color: #c40000; // rouge comme sur ta capture
-}
+    color: #25006b; // rouge comme sur ta capture
+  }
 
-.event-card-date {
-  font-size: 14px;
-  display: flex;
-  flex-direction: column;
-}
+  .event-card-date {
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+  }
 
-.event-card-title {
-  margin: 0;
-  font-size: 18px;
-  font-weight: 700;
-}
+  .event-card-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+  }
 
-.event-card-desc {
-  font-size: 14px;
-  color: #a00000;
-}
+  .event-card-desc {
+    font-size: 14px;
+    color: #080050;
+  }
 
-.event-card-footer {
-  margin-top: auto;
-  display: flex;
-  justify-content: space-between;
-  font-size: 13px;
-}
+  .event-card-footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+  }
+  .icon-btn {
+    position: relative;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 0.4rem;
+
+    &::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 130%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #333;
+      color: white;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      white-space: nowrap;
+
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    &:hover::after {
+      opacity: 1;
+    }
+
+    &.delete {
+      color: #c0392b;
+    }
+
+    &.edit {
+      color: #2980b9;
+    }
+  }
+  .event-card__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .actions-left {
+    display: flex;
+    gap: 0.4rem;
+  }
+
+  .actions-right {
+    margin-left: auto; // 🔑 pousse à droite
+  }
+  .btn-register:disabled {
+    cursor: not-allowed;  // 🚫 cercle barré
+    opacity: 0.5;
+  }

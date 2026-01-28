@@ -33,11 +33,6 @@
 .event-page {
   padding: 24px;
 }
-.add-btn {
-  font-size: 24px;
-  width: 40px;
-  height: 40px;
-}
 
 .popup-overlay {
   position: fixed;
@@ -64,3 +59,39 @@
   gap: 24px;
 }
 
+.group {
+  display:flex;
+  gap:24px; 
+}
+
+.add-btn {
+  width: 260px;
+  height: 260px;
+
+  background: #1f1f1f;          /* légèrement plus clair que le fond */
+  border-radius: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 96px;
+  color: white;
+
+  border: none;
+  cursor: pointer;
+
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.4);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+.add-btn:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 12px 32px rgba(255, 0, 0, 0.6);
+  background: #262626;
+}
